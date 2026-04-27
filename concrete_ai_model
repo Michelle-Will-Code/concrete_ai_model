@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as np
+ 
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+ 
+df = pd.read_csv("concrete.csv")
+ 
+print("Dataset loaded successfully ✅")
+print("Shape (rows, cols):", df.shape)
+print("\nFirst 5 rows:")
+print(df.head())
+ 
+print("\nColumn names:")
+print(df.columns)
+ 
+print("\nMissing values per column:")
+print(df.isna().sum())
+ 
+print("\nSummary stats:")
+print(df.describe())
+ 
+target = "Concrete compressive strength(MPa, megapascals)"
+ 
+X = df.drop(columns=[target])
+y = df[target]
+ 
+print("\nX shape:", X.shape)
+print("y shape:", y.shape)
+ 
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+ 
+print("\nTrain size:", X_train.shape[0])
+print("Test size:", X_test.shape[0])
+ 
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+ 
+lr_pred = lr.predict(X_test)
+ 
+# Evaluate Linear Regression
+lr_mae = mean_absolute_error(y_test, lr_pred)
+lr_rmse = np.sqrt(mean_squared_error(y_test, lr_pred))
+lr_r2 = r2_score(y_test, lr_pred)
+ 
+print("LINEAR REGRESSION (Baseline)")
+print("MAE :", round(lr_mae, 3))
+print("RMSE:", round(lr_rmse, 3))
+print("R2  :", round(lr_r2, 3))
