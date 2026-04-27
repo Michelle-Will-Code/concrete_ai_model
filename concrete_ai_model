@@ -1,51 +1,72 @@
-import pandas as pd
-import numpy as np
+import pandas as pd #handling datasets
+import numpy as np #for numerical operations
  
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split # splits data into testing and training sets
+from sklearn.linear_model import LinearRegression # imports a linear regression model
+from sklearn.ensemble import RandomForestRegressor #imports a Random Forest model
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score #imports MAE, MSE/RMSE & R2
  
-df = pd.read_csv("concrete.csv")
- 
+df = pd.read_csv("concrete.csv") # load dataset into a dataframe
+
+#--------------------------------------------------------#
+#---------------- Exploration of Dataset ----------------#
+#--------------------------------------------------------#
+
 print("Dataset loaded successfully ✅")
-print("Shape (rows, cols):", df.shape)
+print("Shape (rows, cols):", df.shape) # show num of rows and columns
 print("\nFirst 5 rows:")
-print(df.head())
+print(df.head()) #shows first 5 rows
  
 print("\nColumn names:")
-print(df.columns)
+print(df.columns) #shows all column names
  
 print("\nMissing values per column:")
-print(df.isna().sum())
+print(df.isna().sum()) #checks for missing values in each column
  
 print("\nSummary stats:")
-print(df.describe())
+print(df.describe()) # shows stats: mean min/max, standard deviation
+
+#--------------------------------------------------------#
+#------------------- Identify Features ------------------#
+#--------------------------------------------------------#
+
+target = "Concrete compressive strength(MPa, megapascals)" #stores EXACT name of column we want to predict into a variable
  
-target = "Concrete compressive strength(MPa, megapascals)"
+X = df.drop(columns=[target]) # inputs all features EXCEPT the "target" variable into a variable
+y = df[target] # stores "target" variable into another variable
  
-X = df.drop(columns=[target])
-y = df[target]
- 
-print("\nX shape:", X.shape)
-print("y shape:", y.shape)
+print("\nX shape:", X.shape) #shows size of features
+print("y shape:", y.shape) #shows size of target
+
+#--------------------------------------------------------#
+#------------------- Train/Test Split -------------------#
+#--------------------------------------------------------#
  
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
+# splits data: 80% training data inferred as test size = 0.3 (20%). 42 ensures same data in set used for test and train
  
-print("\nTrain size:", X_train.shape[0])
-print("Test size:", X_test.shape[0])
+print("\nTrain size:", X_train.shape[0]) # print num of training rows
+print("Test size:", X_test.shape[0]) # print num of test rows
  
-lr = LinearRegression()
-lr.fit(X_train, y_train)
+#--------------------------------------------------------#
+#------------------- Linear Regression ------------------#
+#--------------------------------------------------------#
+
+lr = LinearRegression() # create a simple linear regression model
+lr.fit(X_train, y_train) # trains the model
  
-lr_pred = lr.predict(X_test)
- 
+lr_pred = lr.predict(X_test) # makes predeictions
+
+#--------------------------------------------------------#
+#--------------- Evaluate Linear Regression -------------#
+#--------------------------------------------------------#
+
 # Evaluate Linear Regression
-lr_mae = mean_absolute_error(y_test, lr_pred)
-lr_rmse = np.sqrt(mean_squared_error(y_test, lr_pred))
-lr_r2 = r2_score(y_test, lr_pred)
+lr_mae = mean_absolute_error(y_test, lr_pred)# calculates mean average error
+lr_rmse = np.sqrt(mean_squared_error(y_test, lr_pred)) # calculate square root of MSE
+lr_r2 = r2_score(y_test, lr_pred) # calculate R2 score (model performance)
  
 print("LINEAR REGRESSION (Baseline)")
 print("MAE :", round(lr_mae, 3))
