@@ -51,24 +51,32 @@ print("\nTrain size:", X_train.shape[0]) # print num of training rows
 print("Test size:", X_test.shape[0]) # print num of test rows
  
 #--------------------------------------------------------#
-#------------------- Linear Regression ------------------#
+#--------------------- Random Forest --------------------#
 #--------------------------------------------------------#
 
-lr = LinearRegression() # create a simple linear regression model
-lr.fit(X_train, y_train) # trains the model
+rf = RandomForestRegressor(
+    n_estimators=100,
+    random_state=42,
+    max_features='sqrt',
+    max_depth=None,
+    max_leaf_nodes=None,
+    max_samples=None,
+    min_samples_split=2) # create a Random Forest model
+
+rf.fit(X_train, y_train) # trains the model
  
-lr_pred = lr.predict(X_test) # makes predeictions
+rf_pred = rf.predict(X_test) # makes predeictions
 
 #--------------------------------------------------------#
-#--------------- Evaluate Linear Regression -------------#
+#--------------- Evaluate Random Forest -----------------#
 #--------------------------------------------------------#
 
-# Evaluate Linear Regression
-lr_mae = mean_absolute_error(y_test, lr_pred)# calculates mean average error
-lr_rmse = np.sqrt(mean_squared_error(y_test, lr_pred)) # calculate square root of MSE
-lr_r2 = r2_score(y_test, lr_pred) # calculate R2 score (model performance)
+# Evaluate Random Forest
+rf_mae = mean_absolute_error(y_test, rf_pred)# calculates mean average error
+rf_rmse = np.sqrt(mean_squared_error(y_test, rf_pred)) # calculate square root of MSE
+rf_r2 = r2_score(y_test, rf_pred) # calculate R2 score (model performance)
  
-print("LINEAR REGRESSION (Baseline)")
-print("MAE :", round(lr_mae, 3))
-print("RMSE:", round(lr_rmse, 3))
-print("R2  :", round(lr_r2, 3))
+print("RANDOM FOREST")
+print("MAE :", round(rf_mae, 3))
+print("RMSE:", round(rf_rmse, 3))
+print("R2  :", round(rf_r2, 3))
