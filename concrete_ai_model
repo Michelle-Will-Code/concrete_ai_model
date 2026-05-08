@@ -7,6 +7,8 @@ from sklearn.ensemble import RandomForestRegressor #imports a Random Forest mode
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score #imports MAE, MSE/RMSE & R2
 from sklearn.preprocessing import PolynomialFeatures # imports a custom function to create polynomial features
 from sklearn.pipeline import Pipeline # imports a custom function to create a pipeline for polynomial regression
+from sklearn.preprocessing import StandardScaler # imports a custom function to standardize features
+from sklearn.linear_model import Ridge # imports a custom function to perform ridge regression
 
 df = pd.read_csv("concrete.csv") # load dataset into a dataframe
 
@@ -59,7 +61,9 @@ print("Test size:", X_test.shape[0]) # print num of test rows
 
 pm = Pipeline([
     ("poly", PolynomialFeatures(degree=2, include_bias=False)),
-    ("linear", LinearRegression())
+    ("scaler", StandardScaler()),
+    #("linear", LinearRegression()),
+    ("ridge", Ridge(alpha=0.01))
     ])
 
 pm.fit(X_train, y_train)
