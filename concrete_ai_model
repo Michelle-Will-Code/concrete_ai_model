@@ -6,7 +6,8 @@ from sklearn.linear_model import LinearRegression # imports a linear regression 
 from sklearn.ensemble import RandomForestRegressor #imports a Random Forest model
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score #imports MAE, MSE/RMSE & R2
  
-df = pd.read_csv("concrete.csv") # load dataset into a dataframe
+df = pd.read_csv("concrete_data_cleaned.csv") # load dataset into a dataframe
+
 
 #--------------------------------------------------------#
 #---------------- Exploration of Dataset ----------------#
@@ -30,7 +31,7 @@ print(df.describe()) # shows stats: mean min/max, standard deviation
 #------------------- Identify Features ------------------#
 #--------------------------------------------------------#
 
-target = "Concrete compressive strength(MPa, megapascals)" #stores EXACT name of column we want to predict into a variable
+target = "Compressive_Strength" #stores EXACT name of column we want to predict into a variable
  
 X = df.drop(columns=[target]) # inputs all features EXCEPT the "target" variable into a variable
 y = df[target] # stores "target" variable into another variable
