@@ -53,32 +53,66 @@ df.to_csv("concrete_data_cleaned.csv", index=False)"""
 #--------------------------------------------------------#
 
 # Correlation heatmap
-plt.figure(figsize=(10, 10))
+"""plt.figure(figsize=(10, 10))
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
 plt.xticks(fontsize=6)
 plt.yticks(fontsize=6)
 plt.title("Correlation Heatmap of Concrete Dataset", fontsize=12)
-plt.show()
+plt.show()"""
 
 #Scatter plot Cement Vs Compressive Strength
-sns.scatterplot(x='Cement', y='Compressive_Strength', data=df)
+"""sns.scatterplot(x='Cement', y='Compressive_Strength', data=df)
 plt.title("Cement vs Compressive Strength")
 plt.xlabel("Cement (kg/m³)")
 plt.ylabel("Compressive Strength (MPa)")
 plt.show()
+"""
 
 #Scatter plot Water Vs Compressive Strength
-sns.scatterplot(x='Water', y='Compressive_Strength', data=df)
+"""sns.scatterplot(x='Water', y='Compressive_Strength', data=df)
 plt.title("Water vs Compressive Strength")
 plt.xlabel("Water (kg/m³)")
 plt.ylabel("Compressive Strength (MPa)")
-plt.show()
+plt.show()"""
 
-#Scatter water/cement ratio Vs Compressive Strength
+"""#Scatter water/cement ratio Vs Compressive Strength
 df['Water_Cement_Ratio'] = df['Water'] / df['Cement']
-#df.to_csv("concrete_data_cleaned.csv", index=False) # save the new column to the csv file
 sns.scatterplot(x='Water_Cement_Ratio', y='Compressive_Strength', data=df)
 plt.title("Water/Cement Ratio vs Compressive Strength")
 plt.xlabel("Water/Cement Ratio")
 plt.ylabel("Compressive Strength (MPa)")
-plt.show()
+plt.show()"""
+
+#Scatter Slag Vs Compressive Strength
+"""sns.scatterplot(x='Blast_Furnace_Slag', y='Compressive_Strength', data=df)
+plt.title("Blast Furnace Slag vs Compressive Strength")
+plt.xlabel("Blast Furnace Slag (kg/m³)")
+plt.ylabel("Compressive Strength (MPa)")
+plt.show()"""
+
+#Creation of new features (Water/Cement already created above to validate data)
+
+"""#Total Binders = Cement + Blast Furnace Slag + Fly Ash
+df['Total_Binders'] = df['Cement'] + df['Blast_Furnace_Slag'] + df['Fly_Ash']
+
+#Cement/Water Ratio
+df['Cement_Water_Ratio'] = df['Cement'] / df['Water']
+
+#Total Aggregates = Coarse Aggregate + Fine Aggregate
+df['Total_Aggregates'] = df['Coarse_Aggregate'] + df['Fine_Aggregate']
+
+#Aggregate/Binder Ratio
+df['Aggregate_Binder_Ratio'] = df['Total_Aggregates'] / df['Total_Binders']
+
+#Save the new features to the csv file
+df.to_csv("concrete_data_cleaned.csv", index=False)
+
+# Replace infinite values with missing values in of impossible values
+df_features = df.replace([np.inf, -np.inf], np.nan)
+
+# Remove rows with missing values created during feature engineering
+df_features = df_features.dropna()"""
+
+print("df.columns")
+
+
