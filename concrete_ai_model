@@ -10,7 +10,7 @@ from sklearn.pipeline import Pipeline # imports a custom function to create a pi
 from sklearn.preprocessing import StandardScaler # imports a custom function to standardize features
 from sklearn.linear_model import Ridge # imports a custom function to perform ridge regression
 
-df = pd.read_csv("concrete.csv") # load dataset into a dataframe
+df = pd.read_csv("concrete_data_cleaned.csv") # load dataset into a dataframe
 
 #--------------------------------------------------------#
 #---------------- Exploration of Dataset ----------------#
@@ -34,7 +34,7 @@ print(df.describe()) # shows stats: mean min/max, standard deviation
 #------------------- Identify Features ------------------#
 #--------------------------------------------------------#
 
-target = "Concrete compressive strength(MPa, megapascals)" #stores EXACT name of column we want to predict into a variable
+target = "Compressive_Strength" #stores EXACT name of column we want to predict into a variable
  
 X = df.drop(columns=[target]) # inputs all features EXCEPT the "target" variable into a variable
 y = df[target] # stores "target" variable into another variable
@@ -63,7 +63,7 @@ pm = Pipeline([
     ("poly", PolynomialFeatures(degree=2, include_bias=False)),
     ("scaler", StandardScaler()),
     #("linear", LinearRegression()),
-    ("ridge", Ridge(alpha=0.01))
+    ("ridge", Ridge(alpha=0.10))
     ])
 
 pm.fit(X_train, y_train)
