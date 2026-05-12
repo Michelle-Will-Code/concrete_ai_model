@@ -1,5 +1,7 @@
 import pandas as pd #handling datasets
 import numpy as np #for numerical operations
+import matplotlib.pyplot as plt #for plotting
+import seaborn as sns #for plotting
  
 from sklearn.model_selection import train_test_split # splits data into testing and training sets
 from sklearn.linear_model import LinearRegression # imports a linear regression model
@@ -80,3 +82,14 @@ print("LINEAR REGRESSION (Baseline)")
 print("MAE :", round(lr_mae, 3))
 print("RMSE:", round(lr_rmse, 3))
 print("R2  :", round(lr_r2, 3))
+
+#--------------------------------------------------------#
+#------- Chart Showing Predicted Vs Actual Results ------#
+#--------------------------------------------------------#
+
+sns.scatterplot(x=y_test, y=lr_pred)
+plt.xlabel("Actual Compressive Strength")
+plt.ylabel("Predicted Compressive Strength")
+plt.title("Actual vs Predicted Compressive Strength (Linear Regression)")
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--') # adds a red dashed line for perfect predictions
+plt.show()
